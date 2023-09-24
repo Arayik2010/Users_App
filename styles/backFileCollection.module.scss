@@ -1,0 +1,14 @@
+.container{
+    max-width: 750px;
+    height: auto;
+    margin: 10px auto;
+   padding:  5px 10px;
+   
+   .back_link{
+      @apply border rounded-md bg-black text-[#ffff] w-36 text-center;
+
+      &:hover{
+        @apply bg-white text-[#000000] font-medium
+      }
+   }
+}

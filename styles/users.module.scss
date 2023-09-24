@@ -1,0 +1,87 @@
+
+
+.container {
+    @apply  m-auto px-6 bg-[#DFE1E1];
+  
+    .container_inputs {
+      @apply m-auto max-w-3xl text-center py-3;
+  
+      .name_input {
+        @apply w-32 border border-primary-color rounded-md px-1;
+      }
+      .age_input {
+        @apply w-32 border border-primary-color rounded-md px-1 ml-2;
+      }
+      .add_button {
+        @apply  border border-primary-color rounded-md px-3 ml-2 bg-black text-[#ffff];
+  
+        &:hover {
+          background-color: aliceblue;
+          color: black;
+          font-weight: 500;
+          font-family: Arial, Helvetica, sans-serif
+        }
+      }
+    }
+    .items_block {
+      @apply mt-4 pl-4 py-2;
+  
+      .item_data {
+        @apply flex gap-10 mt-4 border rounded-md	 bg-black text-[#ffff] p-3;
+  
+        .item_age {
+          margin-left: 10px;
+        }
+        .button {
+          @apply bg-[#FFFF] border rounded-sm text-[#000000] px-4
+        }
+      }
+    }
+  }
+  .td,
+  .th {
+      border: 1px solid rgb(190, 190, 190);
+      padding: 10px;
+  }
+  
+  .td {
+      text-align: center;
+  }
+  
+  .tr:nth-child(even) {
+      background-color: #eee;
+  }
+  
+  .th[scope='col'] {
+      background-color: #696969;
+      color: #fff;
+  }
+  
+  .th[scope='row'] {
+      background-color: #d7d9f2;
+  }
+  
+  .caption {
+      padding: 10px;
+      caption-side: bottom;
+  }
+  
+  .table {
+      margin: 10px auto;
+      width: 100%;
+      border-collapse: collapse;
+      border: 2px solid rgb(200, 200, 200);
+      letter-spacing: 1px;
+      font-family: sans-serif;
+      font-size: 0.8rem;
+  }
+  
+  .search_input{
+    @apply w-full border border-gray-500 py-1  rounded-md px-2;
+  
+    &:focus {
+      @apply w-full border border-gray-500 py-1  rounded-md px-2;
+  
+    }
+  }
+  
