@@ -4,13 +4,21 @@ import React, { useEffect, useState } from "react";
 import { Area, AreaChart, Tooltip, XAxis, YAxis } from "recharts";
 import moment, { utc } from "moment/moment";
 import GraphFileTitle from "@/components/Molecules/graphFileTitle";
+import { useStore } from "@/Store/store";
 
 const Graph = ({ dataUser }:any) => {
   const [allUserCurrency, setAllUserCurrency] = useState(0);
+  const [data, setData] = useState(dataUser || []);
+  const { userData } = useStore();
+
+  useEffect(() => {
+    getUserCurrency();
+    setData(userData.length? userData : dataUser)
+  }, [dataUser, userData]);
 
   const getUserCurrency = () => {
     const initialValue = 0;
-    const sumWithInitial = dataUser.reduce(
+    const sumWithInitial = data.reduce(
       (accumulator:any, currentValue:any) =>
         accumulator + parseInt(currentValue.currency),
       initialValue
@@ -18,9 +26,6 @@ const Graph = ({ dataUser }:any) => {
     setAllUserCurrency(sumWithInitial);
   };
 
-  useEffect(() => {
-    getUserCurrency();
-  }, [dataUser]);
 
   const dataFormat = (data:any, elemData:any) => {
     return data && data.length <= 7
@@ -30,9 +35,9 @@ const Graph = ({ dataUser }:any) => {
       : moment(elemData).format("MMM Do YY").slice(0, 3);
   };
 
-  const configData = dataUser?.map((el:any) => {
+  const configData = data?.map((el:any) => {
     return {
-      weekDate: dataFormat(dataUser, el.createData),
+      weekDate: dataFormat(data, el.createData),
       name: el.name,
       currency: el.currency,
     };

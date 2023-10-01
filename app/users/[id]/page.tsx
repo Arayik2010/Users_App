@@ -44,7 +44,7 @@ export async function UserItem ({params: {id}}: UserProps) {
               </th>
               <td className={styles.td}>{responseItem.currency}</td>
               <td className={styles.td}>
-                {updateDataFormat(responseItem.userData)}
+                {updateDataFormat(responseItem.createData)}
               </td>
               <td className={styles.td}></td>
             </tr>

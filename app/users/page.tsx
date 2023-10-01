@@ -1,70 +1,43 @@
-import { IUser } from "@/interface/users";
 import React from "react";
 import { json } from "stream/consumers";
 import Link from "next/link";
-import { updateDataFormat } from "@/components/Utils/utils";
+import { requestData, updateDataFormat } from "@/components/Utils/utils";
 import styles from "../../styles/users.module.scss";
 import Box from "@/components/Molecules/Box";
-import Graph from "@/components/Organism/Graph/graph";
+import dynamic from "next/dynamic";
+import FileCollectionTitle from "@/components/Molecules/fileCollectionTitle";
+import AddUser from "@/components/Organism/AddUser/addUser";
+import { revalidateTag } from 'next/cache';
+
+const Graph = dynamic(() => import("@/components/Organism/Graph/graph"), {
+  ssr: false,
+});
+const UserTable = dynamic(
+  () => import("@/components/Organism/Table/userTable"),
+  {
+    ssr: false,
+  }
+);
 
 async function Page() {
-  const res = await fetch("http://localhost:3001/user");
-  const resData = await res.json();
+  const response = await fetch("http://localhost:3001/user", {
+    next: { revalidate: 0 } 
+  
+  });
+  const resData = await response.json();
 
-  console.log(resData);
   return (
     <div className={styles.container}>
+      <AddUser />
+      <FileCollectionTitle
+        title="User Graph"
+        classes={"text-[#535454] font-medium max-w-3xl  pl-4 m-auto"}
+      />
       <Box>
-          <Graph dataUser={resData} />
-        </Box>
+        <Graph dataUser={resData} />
+      </Box>
       <Box>
-        <table className={styles.table}>
-          <tbody>
-            <tr className={styles.tr}>
-              <th className={styles.th} scope="col">
-                User
-              </th>
-              <th className={styles.th} scope="col">
-                Currency
-              </th>
-              <th className={styles.th} scope="col">
-                Update at
-              </th>
-              <th className={styles.th} scope="col">
-                Action
-              </th>
-            </tr>
-            {resData &&
-              resData.map((el: IUser) => (
-                <tr className={styles.tr} key={el.id}>
-                  <th className={styles.th} scope="row">
-                    <Link href={`/users/${el.id}`}>{el.name}</Link>
-                  </th>
-                  <td className={styles.td}>{el.currency}</td>
-                  <td className={styles.td}>
-                    {updateDataFormat(el.createData)}
-                  </td>
-                  <td className={styles.td}>
-                    {/* <PagePopover containerClassName='mt-16'>
-                        <button
-                          onClick={() => setDeleteOpenModal(el)}
-                          className={styles.button}
-                        >
-                          Delete
-                        </button>
-                        <Link
-                          className="ml-2"
-                          href={`/posts/users/edit/${el.id}`}
-                        >
-                          <button className={styles.button}>Details</button>
-                        </Link>
-                      </PagePopover> */}
-                    delete
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        <UserTable resData={resData} />
       </Box>
     </div>
   );

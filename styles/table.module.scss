@@ -28,9 +28,18 @@
 
 .table {
     margin: 10px auto;
+    width: 100%;
     border-collapse: collapse;
     border: 2px solid rgb(200, 200, 200);
     letter-spacing: 1px;
     font-family: sans-serif;
     font-size: 0.8rem;
 }
+.search_input{
+    @apply w-full border border-gray-500 py-1  rounded-md px-2;
+  
+    &:focus {
+      @apply w-full border border-gray-500 py-1  rounded-md px-2;
+  
+    }
+  }

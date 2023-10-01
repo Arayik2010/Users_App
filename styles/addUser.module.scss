@@ -1,0 +1,20 @@
+.container_inputs {
+    @apply m-auto max-w-3xl text-center py-3;
+
+    .name_input {
+      @apply w-32 border border-primary-color rounded-md px-1;
+    }
+    .age_input {
+      @apply w-32 border border-primary-color rounded-md px-1 ml-2;
+    }
+    .add_button {
+      @apply  border border-primary-color rounded-md px-3 ml-2 bg-black text-[#ffff];
+
+      &:hover {
+        background-color: aliceblue;
+        color: black;
+        font-weight: 500;
+        font-family: Arial, Helvetica, sans-serif
+      }
+    }
+  }
