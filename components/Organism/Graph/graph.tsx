@@ -1,33 +1,32 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
-import { Area, AreaChart, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 import moment, { utc } from "moment/moment";
 import GraphFileTitle from "@/components/Molecules/graphFileTitle";
 import { useStore } from "@/Store/store";
 
-const Graph = ({ dataUser }:any) => {
+const Graph = ({ dataUser }: any) => {
   const [allUserCurrency, setAllUserCurrency] = useState(0);
   const [data, setData] = useState(dataUser || []);
   const { userData } = useStore();
 
   useEffect(() => {
     getUserCurrency();
-    setData(userData.length? userData : dataUser)
+    setData(userData.length ? userData : dataUser);
   }, [dataUser, userData]);
 
   const getUserCurrency = () => {
     const initialValue = 0;
     const sumWithInitial = data.reduce(
-      (accumulator:any, currentValue:any) =>
+      (accumulator: any, currentValue: any) =>
         accumulator + parseInt(currentValue.currency),
       initialValue
     );
     setAllUserCurrency(sumWithInitial);
   };
 
-
-  const dataFormat = (data:any, elemData:any) => {
+  const dataFormat = (data: any, elemData: any) => {
     return data && data.length <= 7
       ? moment(elemData).format("dddd").slice(0, 3)
       : (data.length >= 7 && data.length) <= 31
@@ -35,13 +34,15 @@ const Graph = ({ dataUser }:any) => {
       : moment(elemData).format("MMM Do YY").slice(0, 3);
   };
 
-  const configData = data?.map((el:any) => {
+  const configData = data?.map((el: any) => {
     return {
       weekDate: dataFormat(data, el.createData),
       name: el.name,
       currency: el.currency,
     };
   });
+
+
   return (
     <>
       <GraphFileTitle
@@ -49,7 +50,7 @@ const Graph = ({ dataUser }:any) => {
         graphCurrency={allUserCurrency}
         classes={"text-[#4599F2] font-medium max-w-3xl"}
       />
-      <AreaChart
+      <LineChart
         width={730}
         height={250}
         data={configData}
@@ -60,12 +61,14 @@ const Graph = ({ dataUser }:any) => {
           left: 20,
         }}
       >
+        <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="weekDate" />
-        <YAxis dataKey="currency" />
-        <Area dataKey="name" stroke="#8884d8" fill="#8884d8" />
-        <Area dataKey="currency" stroke="#8884d8" fill="#8884d8" />
+        <YAxis />
         <Tooltip />
-      </AreaChart>
+        <Legend />
+        <Line type="monotone" dataKey="name" stroke="#8884d8" />
+        <Line type="monotone" dataKey="currency" stroke="#82ca9d" />
+      </LineChart>
     </>
   );
 };
