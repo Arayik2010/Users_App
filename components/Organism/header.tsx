@@ -2,7 +2,7 @@ import React from "react";
 import Navigation from "./navigation";
 
 const Header = () => {
-  return <div className="bg-yellow-300">
+  return <div className="bg-black text-white ">
     <Navigation/>
   </div>;
 };

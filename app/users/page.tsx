@@ -28,7 +28,6 @@ async function Page() {
 
   return (
     <div className={styles.container}>
-      <AddUser />
       <FileCollectionTitle
         title="User Graph"
         classes={"text-[#535454] font-medium max-w-3xl  pl-4 m-auto"}
@@ -36,6 +35,13 @@ async function Page() {
       <Box>
         <Graph dataUser={resData} />
       </Box>
+      <FileCollectionTitle
+          title="User Data"
+          linkRef='/users/add'
+          text ="Add user"
+          classBlock = {"flex justify-between item-center max-w-3xl m-auto pr-4"}
+          classes={"text-[#535454] font-medium max-w-3xl  pl-4 "}
+        />
       <Box>
         <UserTable resData={resData} />
       </Box>
