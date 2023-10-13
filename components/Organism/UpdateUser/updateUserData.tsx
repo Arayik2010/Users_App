@@ -15,7 +15,7 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
   const { setUserData } = useStore();
   const router = useRouter()
 
-  
+  console.log(responseItem, id)
   const updateUserData = async() =>{
     try {
       await fetch(`http://localhost:3001/user/${id}`, {
@@ -27,7 +27,7 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
           id: id,
           name: value,
           currency: userCurrency,
-          createData: responseItem.createData,
+          createData: Date.now(),
         }),
         
       });

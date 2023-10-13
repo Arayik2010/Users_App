@@ -5,6 +5,7 @@ import { Area, AreaChart, CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis
 import moment, { utc } from "moment/moment";
 import GraphFileTitle from "@/components/Molecules/graphFileTitle";
 import { useStore } from "@/Store/store";
+import { IUser } from "@/interface/users";
 
 const Graph = ({ dataUser }: any) => {
   const [allUserCurrency, setAllUserCurrency] = useState(0);

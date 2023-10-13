@@ -4,18 +4,18 @@ import { Popover } from "react-tiny-popover";
 // import Typography from "@mui/material/Typography";
 // import { StyledEngineProvider } from "@mui/material/styles";
 import Image from "next/image";
+import { IPopoverType } from "@/interface/users";
 
-const PagePopover = ({children, containerClassName}:any) => {
+const PagePopover = ({ children, containerClassName }: IPopoverType) => {
   const [anchorEl, setAnchorEl] = useState<any>();
 
-  const handleClick = (event:any) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -24,9 +24,11 @@ const PagePopover = ({children, containerClassName}:any) => {
       <Popover
         isOpen={anchorEl}
         onClickOutside={handleClose}
-        positions={["top", "left",]} 
+        positions={["top", "left"]}
         containerClassName={containerClassName}
-        content={<div  className="bg-yellow-300 mt-8 p-3 rounded">{children}</div>}
+        content={
+          <div className="bg-yellow-300 mt-8 p-3 rounded">{children}</div>
+        }
       >
         <div>
           {" "}

@@ -28,7 +28,7 @@ const AddUser = () => {
           id: Math.floor(Math.random() * 100),
           name: value,
           currency: userCurrency,
-          createData: new Date(),
+          createData: Date.now(),
         }),
       });
       setIsOpen(false);
