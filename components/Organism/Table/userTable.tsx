@@ -4,12 +4,19 @@ import React, { useEffect, useState } from "react";
 import styles from "@/styles/table.module.scss";
 import { IUser } from "@/interface/users";
 import Link from "next/link";
-import { requestData, updateDataFormat } from "@/components/Utils/utils";
+import {
+  diffDays,
+  requestData,
+  updateDataFormat,
+} from "@/components/Utils/utils";
 import PagePopover from "../pagePopover";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useStore } from "@/Store/store";
 import UserModal from "../Modal/modal";
+import Image from "next/image";
+import WarningIcon from "@/components/Icons/warningIcon";
+import ChackedIcon from "@/components/Icons/checkedIcon";
 
 const UserTable = ({ resData }: any) => {
   const [data, setData] = useState(resData || []);
@@ -17,8 +24,7 @@ const UserTable = ({ resData }: any) => {
   const [activePage, setActivePage] = useState(1);
   const [chunkData, setChunkData] = useState([]);
   const [deleteOpenModal, setDeleteOpenModal] = useState<any>(false);
-  const { userData,setUserData } = useStore();
-  console.log(userData, "fff");
+  const { userData, setUserData } = useStore();
   let pageSize = 5;
 
   const chunk = data.reduce(
@@ -93,17 +99,28 @@ const UserTable = ({ resData }: any) => {
                 <td className={styles.td}>{el.currency}</td>
                 <td className={styles.td}>{updateDataFormat(el.createData)}</td>
                 <td className={styles.td}>
-                  <PagePopover containerClassName="mt-16">
-                    <button
-                      onClick={() => setDeleteOpenModal(el)}
-                      className={styles.button}
-                    >
-                      Delete
-                    </button>
-                    <Link className="ml-2" href={`/users/edit/${el.id}`}>
-                      <button className={styles.button}>Details</button>
-                    </Link>
-                  </PagePopover>
+                  <div className="flex justify-center items-center">
+                    {diffDays(el.createData) ? (
+                      <div>
+                        <WarningIcon />
+                      </div>
+                    ) : (
+                      <div>
+                        <ChackedIcon />
+                      </div>
+                    )}
+                    <PagePopover containerClassName="mt-16">
+                      <button
+                        onClick={() => setDeleteOpenModal(el)}
+                        className={styles.button}
+                      >
+                        Delete
+                      </button>
+                      <Link className="ml-2" href={`/users/edit/${el.id}`}>
+                        <button className={styles.button}>Details</button>
+                      </Link>
+                    </PagePopover>
+                  </div>
                 </td>
               </tr>
             ))}

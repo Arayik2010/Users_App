@@ -1,7 +1,8 @@
+import { GraphCollectinTitleType } from "@/interface/fileCollectioTitle";
 import React, { useEffect, useState } from "react";
 
-const GraphFileTitle = ({ classes, title, graphCurrency}:any) => {
-  const [formatCurrency, setFormatCurrency] = useState(0);
+const GraphFileTitle = ({ classes, title, graphCurrency }: GraphCollectinTitleType) => {
+  const [formatCurrency, setFormatCurrency] = useState<number | string>(0);
 
   const numberWithCommas = () => {
     graphCurrency = graphCurrency.toString();

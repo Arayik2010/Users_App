@@ -7,7 +7,8 @@ import Box from "@/components/Molecules/Box";
 import dynamic from "next/dynamic";
 import FileCollectionTitle from "@/components/Molecules/fileCollectionTitle";
 import AddUser from "@/components/Organism/AddUser/addUser";
-import { revalidateTag } from 'next/cache';
+import { revalidateTag } from "next/cache";
+import { IUser } from "@/interface/users";
 
 const Graph = dynamic(() => import("@/components/Organism/Graph/graph"), {
   ssr: false,
@@ -21,8 +22,7 @@ const UserTable = dynamic(
 
 async function Page() {
   const response = await fetch("http://localhost:3001/user", {
-    next: { revalidate: 0 } 
-  
+    next: { revalidate: 0 },
   });
   const resData = await response.json();
 
@@ -36,12 +36,14 @@ async function Page() {
         <Graph dataUser={resData} />
       </Box>
       <FileCollectionTitle
-          title="User Data"
-          linkRef='/users/add'
-          text ="Add user"
-          classBlock = {"flex justify-between item-center max-w-3xl m-auto pr-4"}
-          classes={"text-[#535454] font-medium max-w-3xl  pl-4 "}
-        />
+        title="User Data"
+        link={{
+          linkRef :"/users/add",
+          text : "Add user",
+        }}
+        classBlock={"flex justify-between item-center max-w-3xl m-auto pr-4"}
+        classes={"text-[#535454] font-medium max-w-3xl  pl-4 "}
+      />
       <Box>
         <UserTable resData={resData} />
       </Box>
