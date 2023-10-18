@@ -1,21 +1,54 @@
 "use client";
-
+import Select from "react-select";
 import React, { useEffect, useState } from "react";
-import { Area, AreaChart, CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import moment, { utc } from "moment/moment";
 import GraphFileTitle from "@/components/Molecules/graphFileTitle";
 import { useStore } from "@/Store/store";
 import { IUser } from "@/interface/users";
+import { Console } from "console";
+
+const options = [
+  { value: "7 days", label: "7 Days" },
+  { value: "month", label: "Month" },
+  { value: "year", label: "Year" },
+];
 
 const Graph = ({ dataUser }: any) => {
   const [allUserCurrency, setAllUserCurrency] = useState(0);
+  const [selectedOption, setSelectedOption] = useState<any>(options[0]);
   const [data, setData] = useState(dataUser || []);
+  const [days, setDays] = useState<any>([]);
   const { userData } = useStore();
 
   useEffect(() => {
     getUserCurrency();
+    // peroidData()
     setData(userData.length ? userData : dataUser);
-  }, [dataUser, userData]);
+  }, [dataUser, userData,selectedOption]);
+
+  
+  useEffect(() => {
+
+    const week:any = [];
+    for (let i = 0; i < 7; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      week.push(moment(date).format('dddd').slice(0,3));
+      
+    }
+    setDays(week);
+  }, [selectedOption]);
 
   const getUserCurrency = () => {
     const initialValue = 0;
@@ -27,30 +60,73 @@ const Graph = ({ dataUser }: any) => {
     setAllUserCurrency(sumWithInitial);
   };
 
-  const dataFormat = (data: any, elemData: any) => {
-    return data && data.length <= 7
-      ? moment(elemData).format("dddd").slice(0, 3)
-      : (data.length >= 7 && data.length) <= 31
-      ? moment(elemData).format("L").slice(3, 5)
-      : moment(elemData).format("MMM Do YY").slice(0, 3);
-  };
+  const periodDays = () => {
+    const daysMonth:any = []
+    for(let i = 0; i < 31; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      daysMonth.push(moment(date).format('L').slice(3,5))
+      console.log(days,'month')
+    }
+    setDays(daysMonth)
+  }
+
+  const chagePeriodSelect = () =>{
+    setSelectedOption;
+    periodDays()
+
+  }
+
+
+  console.log(days,'days')
+
+  // const dataFormat = (data: any, elemData: any) => {
+  //   return data && data.length <= 7
+  //     ? moment(elemData).format("dddd").slice(0, 3)
+  //     : (data.length >= 7 && data.length) <= 31
+  //     ? moment(elemData).format("L").slice(3, 5)
+  //     : moment(elemData).format("MMM Do YY").slice(0, 3);
+  // };
 
   const configData = data?.map((el: any) => {
     return {
-      weekDate: dataFormat(data, el.createData),
+      // weekDate: dataFormat(data, el.createData),
       name: el.name,
       currency: el.currency,
     };
   });
 
+  let date = new Date();
+
+
+  const peroidData = () => {
+    if (selectedOption.label === "7 Days") {
+      console.log(moment(Date.now()));
+    }
+    if (selectedOption.label === "Month") {
+      console.log("month");
+    }
+    if (selectedOption.label === "Year") {
+      console.log("year");
+    }
+  };
 
   return (
-    <>
-      <GraphFileTitle
-        title="Our Graph Information"
-        graphCurrency={allUserCurrency}
-        classes={"text-[#4599F2] font-medium max-w-3xl"}
-      />
+    <div>
+      <div className="flex justify-between gap-4 items-center">
+        <GraphFileTitle
+          title="Our Graph Information"
+          graphCurrency={allUserCurrency}
+          classes={"text-[#4599F2] font-medium max-w-3xl"}
+        />
+        <Select
+          className="w-36"
+          defaultValue={selectedOption}
+          onChange={chagePeriodSelect}
+          options={options}
+        />
+      </div>
+
       <LineChart
         width={730}
         height={250}
@@ -63,14 +139,14 @@ const Graph = ({ dataUser }: any) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="weekDate" />
+        <XAxis  dataKey={days} />
         <YAxis />
         <Tooltip />
         <Legend />
         <Line type="monotone" dataKey="name" stroke="#8884d8" />
         <Line type="monotone" dataKey="currency" stroke="#82ca9d" />
       </LineChart>
-    </>
+    </div>
   );
 };
 export default Graph;

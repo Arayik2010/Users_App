@@ -4,6 +4,8 @@ import styles from "@/styles/addUser.module.scss";
 import { requestData } from "@/components/Utils/utils";
 import { useStore } from "@/Store/store";
 import UserModal from "../Modal/modal";
+import Button from "@/components/Molecules/Button";
+import Box from "@/components/Molecules/Box";
 
 const AddUser = () => {
   const [value, setValue] = useState("");
@@ -48,22 +50,26 @@ const AddUser = () => {
 
   return (
     <div className={styles.container_inputs}>
-      <input
-        className={styles.name_input}
-        type="text"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-      <input
-        className={styles.age_input}
-        type="number"
-        value={userCurrency}
-        onChange={(e) => setUserCurrency(e.target.value)}
-      />
+      <Box>
+        <input
+          className={styles.name_input}
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+        <input
+          className={styles.age_input}
+          type="number"
+          value={userCurrency}
+          onChange={(e) => setUserCurrency(e.target.value)}
+        />
 
-      <button className={styles.add_button} onClick={() => setIsOpen(true)}>
-        add user
-      </button>
+        {/* <button className={styles.add_button} onClick={() => setIsOpen(true)}>
+          add user data
+        </button> */}
+      </Box>
+
+      {/* <Button></Button> */}
       <UserModal
         onlyConfirmButton={true}
         handlerRequest={() => handleRequestCloseModal()}

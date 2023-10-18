@@ -1,14 +1,18 @@
 .container_inputs {
-    @apply m-auto max-w-3xl text-center py-3;
+    @apply  flex justify-center m-auto max-w-3xl text-center py-3;
 
     .name_input {
-      @apply w-32 border border-primary-color rounded-md px-1;
+      @apply  border border-primary-color rounded-md px-1 py-1 text-sm;
     }
     .age_input {
-      @apply w-32 border border-primary-color rounded-md px-1 ml-2;
+      @apply  border border-primary-color rounded-md px-1 mt-4 py-1 text-sm;
+    }
+    .error_text {
+      color: red;
+      font-size: 12px;
     }
     .add_button {
-      @apply  border border-primary-color rounded-md px-3 ml-2 bg-black text-[#ffff];
+      @apply  border border-primary-color rounded-md px-3 ml-2 mt-4 bg-black text-[#ffff];
 
       &:hover {
         background-color: aliceblue;
