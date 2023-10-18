@@ -7,6 +7,7 @@ import UserModal from "../Modal/modal";
 import { useRouter } from 'next/navigation';
 import { useStore } from "@/Store/store";
 import { requestData } from "@/components/Utils/utils";
+import Button from "@/components/Molecules/Button";
 
 const UpdateUserDataForm = ({responseItem,id}:any) => {
   const [value, setValue] = useState(responseItem.name);
@@ -65,9 +66,9 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
           onChange={(e) => setUserCurrency(e.target.value)}
         />
 
-        <button className={styles.add_button} onClick={()=> setUserUpdateModal(true)}>
-          Update user
-        </button>
+        <Button classes={styles.add_button} onClick={()=> setUserUpdateModal(true)}>
+          Update user 
+        </Button>
       </Box>
       <UserModal
        onlyConfirmButton={true}

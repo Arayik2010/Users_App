@@ -7,18 +7,18 @@
       @apply m-auto max-w-3xl text-center py-3;
   
       .name_input {
-        @apply w-32 border border-primary-color rounded-md px-1;
+        @apply  border border-primary-color rounded-md px-1 py-1;
       }
       .age_input {
-        @apply w-32 border border-primary-color rounded-md px-1 ml-2;
+        @apply  border border-primary-color rounded-md px-1 ml-2 py-1;
       }
       .add_button {
-        @apply  border border-primary-color rounded-md px-3 ml-2 bg-black text-[#ffff];
+        @apply  border border-primary-color rounded-md px-3 ml-2 mt-4 bg-black text-[#ffff];
   
         &:hover {
           background-color: aliceblue;
           color: black;
-          font-weight: 500;
+          font-weight: 600;
           font-family: Arial, Helvetica, sans-serif
         }
       }

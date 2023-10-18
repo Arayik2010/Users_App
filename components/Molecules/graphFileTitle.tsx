@@ -17,7 +17,7 @@ const GraphFileTitle = ({ classes, title, graphCurrency }: GraphCollectinTitleTy
   }, [graphCurrency]);
 
   return (
-    <div className="mt-4 flex justify-between">
+    <div className=" flex justify-between  w-full pr-4 item-center">
       <h1 className={classes}>{title}</h1>
       <h2 className="text-black font-medium"> {`USD ${formatCurrency}`}</h2>
     </div>

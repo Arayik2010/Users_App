@@ -6,9 +6,8 @@ import styles from "../../styles/users.module.scss";
 import Box from "@/components/Molecules/Box";
 import dynamic from "next/dynamic";
 import FileCollectionTitle from "@/components/Molecules/fileCollectionTitle";
-import AddUser from "@/components/Organism/AddUser/addUser";
-import { revalidateTag } from "next/cache";
-import { IUser } from "@/interface/users";
+
+
 
 const Graph = dynamic(() => import("@/components/Organism/Graph/graph"), {
   ssr: false,
@@ -22,7 +21,7 @@ const UserTable = dynamic(
 
 async function Page() {
   const response = await fetch("http://localhost:3001/user", {
-    next: { revalidate: 0 },
+    next: { revalidate: 0},
   });
   const resData = await response.json();
 
