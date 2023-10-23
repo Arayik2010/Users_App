@@ -21,7 +21,7 @@ const UserTable = dynamic(
 
 async function Page() {
   const response = await fetch("http://localhost:3001/user", {
-    next: { revalidate: 0},
+     cache: 'no-store' ,
   });
   const resData = await response.json();
 
