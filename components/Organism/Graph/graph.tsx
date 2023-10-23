@@ -16,7 +16,7 @@ import moment, { utc } from "moment/moment";
 import GraphFileTitle from "@/components/Molecules/graphFileTitle";
 import { useStore } from "@/Store/store";
 import { IUser } from "@/interface/users";
-import { Console } from "console";
+
 
 const options = [
   { value: "7 days", label: "7 Days" },
@@ -33,7 +33,6 @@ const Graph = ({ dataUser }: any) => {
 
   useEffect(() => {
     getUserCurrency();
-    // peroidData()
     setData(userData.length ? userData : dataUser);
   }, [dataUser, userData,selectedOption]);
 
@@ -48,7 +47,8 @@ const Graph = ({ dataUser }: any) => {
       
     }
     setDays(week);
-  }, [selectedOption]);
+  }, []);
+
 
   const getUserCurrency = () => {
     const initialValue = 0;
@@ -60,56 +60,45 @@ const Graph = ({ dataUser }: any) => {
     setAllUserCurrency(sumWithInitial);
   };
 
-  const periodDays = () => {
+  const periodDays = (selected: any) => {
+
+    setSelectedOption(selected);
+    console.log(selected.value,'value')
+    const daysWeek: any = []
     const daysMonth:any = []
-    for(let i = 0; i < 31; i++) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      daysMonth.push(moment(date).format('L').slice(3,5))
-      console.log(days,'month')
+    if(selected.value === "month") {
+      for(let i = 0; i < 31; i++) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        daysMonth.push(moment(date).format('L').slice(3,5))
+      }
+      setDays(daysMonth)
+    }if(selected.value === "7 days") {
+      for (let i = 0; i < 7; i++) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        daysWeek.push(moment(date).format('dddd').slice(0,3));
+      }
+      setDays(daysWeek);
     }
-    setDays(daysMonth)
   }
 
-  const chagePeriodSelect = () =>{
-    setSelectedOption;
-    periodDays()
-
-  }
-
-
-  console.log(days,'days')
-
-  // const dataFormat = (data: any, elemData: any) => {
-  //   return data && data.length <= 7
-  //     ? moment(elemData).format("dddd").slice(0, 3)
-  //     : (data.length >= 7 && data.length) <= 31
-  //     ? moment(elemData).format("L").slice(3, 5)
-  //     : moment(elemData).format("MMM Do YY").slice(0, 3);
-  // };
+  const dataFormat = (data: any, elemData: any) => {
+    return data && data.length <= 7
+      ? moment(elemData).format("dddd").slice(0, 3)
+      : (data.length >= 7 && data.length) <= 31
+      ? moment(elemData).format("L").slice(3, 5)
+      : moment(elemData).format("MMM Do YY").slice(0, 3);
+  };
 
   const configData = data?.map((el: any) => {
     return {
-      // weekDate: dataFormat(data, el.createData),
+      weekDate: days,
       name: el.name,
       currency: el.currency,
     };
   });
 
-  let date = new Date();
-
-
-  const peroidData = () => {
-    if (selectedOption.label === "7 Days") {
-      console.log(moment(Date.now()));
-    }
-    if (selectedOption.label === "Month") {
-      console.log("month");
-    }
-    if (selectedOption.label === "Year") {
-      console.log("year");
-    }
-  };
 
   return (
     <div>
@@ -122,7 +111,7 @@ const Graph = ({ dataUser }: any) => {
         <Select
           className="w-36"
           defaultValue={selectedOption}
-          onChange={chagePeriodSelect}
+          onChange={periodDays}
           options={options}
         />
       </div>
@@ -139,7 +128,7 @@ const Graph = ({ dataUser }: any) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis  dataKey={days} />
+        <XAxis  dataKey="weekDate" />
         <YAxis />
         <Tooltip />
         <Legend />
