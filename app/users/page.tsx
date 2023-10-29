@@ -20,7 +20,7 @@ const UserTable = dynamic(
 );
 
 async function Page() {
-  const response = await fetch("http://localhost:3001/user", {
+  const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user', {
     next: { revalidate: 0},
   });
   const resData = await response.json();

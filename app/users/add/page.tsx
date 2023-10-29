@@ -19,7 +19,6 @@ const schema = yup
       .required("Name is empty"),
     userCurrency: yup
       .number()
-      // .matches(/^([^0-9]*)$/, "Last name should not container number")
       .required("Currency is empty"),
   })
   .required();
@@ -38,7 +37,6 @@ const AddUser = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    // defaultValues: { firstName: data.firstName, lastName: data.lastName },
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
@@ -49,7 +47,7 @@ const AddUser = () => {
 
   const onSubmit = async (date: any) => {
     try {
-      await fetch("http://localhost:3001/user", {
+      await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/user", {
         method: "post",
         headers: {
           "content-type": "application/json",

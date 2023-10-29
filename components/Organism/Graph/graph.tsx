@@ -80,36 +80,23 @@ const Graph = ({ dataUser }: any) => {
 
   console.log(days,'days')
 
-  // const dataFormat = (data: any, elemData: any) => {
-  //   return data && data.length <= 7
-  //     ? moment(elemData).format("dddd").slice(0, 3)
-  //     : (data.length >= 7 && data.length) <= 31
-  //     ? moment(elemData).format("L").slice(3, 5)
-  //     : moment(elemData).format("MMM Do YY").slice(0, 3);
-  // };
+  const dataFormat = (data: any, elemData: any) => {
+    return data && data.length <= 7
+      ? moment(elemData).format("dddd").slice(0, 3)
+      : (data.length >= 7 && data.length) <= 31
+      ? moment(elemData).format("L").slice(3, 5)
+      : moment(elemData).format("MMM Do YY").slice(0, 3);
+  };
 
   const configData = data?.map((el: any) => {
     return {
-      // weekDate: dataFormat(data, el.createData),
+      weekDate: dataFormat(data, el.createData),
       name: el.name,
       currency: el.currency,
     };
   });
 
-  let date = new Date();
-
-
-  const peroidData = () => {
-    if (selectedOption.label === "7 Days") {
-      console.log(moment(Date.now()));
-    }
-    if (selectedOption.label === "Month") {
-      console.log("month");
-    }
-    if (selectedOption.label === "Year") {
-      console.log("year");
-    }
-  };
+  
 
   return (
     <div>
@@ -139,7 +126,7 @@ const Graph = ({ dataUser }: any) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis  dataKey={days} />
+        <XAxis  dataKey="weekDate" />
         <YAxis />
         <Tooltip />
         <Legend />

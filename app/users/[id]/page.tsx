@@ -14,7 +14,7 @@ interface UserProps {
 
 export async function UserItem ({params: {id}}: UserProps) {
   
-    const requestItem = await fetch(`http://localhost:3001/user/${id}`);
+    const requestItem = await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`);
     const responseItem = await requestItem.json();
 
 

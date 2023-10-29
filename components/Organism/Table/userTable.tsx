@@ -49,7 +49,7 @@ const UserTable = ({ resData }: any) => {
 
   const deleteRecord = async (id: string) => {
     try {
-      await fetch(`http://localhost:3001/user/${id}`, {
+      await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -61,7 +61,7 @@ const UserTable = ({ resData }: any) => {
     }
   };
   const searchDataUser = async (userName: string) => {
-    await fetch(`http://localhost:3001/user?name=${userName}`)
+    await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/user?name=${userName}`)
       .then((res) => res.json())
       .then((res) => setData(res));
   };
