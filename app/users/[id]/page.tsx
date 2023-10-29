@@ -1,22 +1,24 @@
 import BackFileCollection from "@/components/Molecules/BackFileColection";
 import Box from "@/components/Molecules/Box";
 import { updateDataFormat } from "@/components/Utils/utils";
-import styles from '@/styles/users.module.scss'
+import styles from "@/styles/users.module.scss";
 import { type } from "os";
 import React from "react";
-
 
 // import { Layout } from "../../..//components/Layouts/layout";
 
 interface UserProps {
-    params:any
+  params: any;
 }
 
-export async function UserItem ({params: {id}}: UserProps) {
-  
-    const requestItem = await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`);
-    const responseItem = await requestItem.json();
-
+export async function UserItem({ params: { id } }: UserProps) {
+  const requestItem = await fetch(
+    process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
+  const responseItem = await requestItem.json();
 
   return (
     <div>
@@ -53,7 +55,7 @@ export async function UserItem ({params: {id}}: UserProps) {
       </Box>
     </div>
   );
-};
+}
 // UserItem.getLayout = function getLayout(page) {
 //   return <Layout>{page}</Layout>;
 // };
