@@ -1,24 +1,24 @@
 .container_inputs {
-    @apply  flex justify-center m-auto max-w-3xl text-center py-3;
+  @apply flex justify-center m-auto max-w-3xl text-center py-3;
 
-    .name_input {
-      @apply  border border-primary-color rounded-md px-1 py-1 text-sm;
-    }
-    .age_input {
-      @apply  border border-primary-color rounded-md px-1 mt-4 py-1 text-sm;
-    }
-    .error_text {
-      color: red;
-      font-size: 12px;
-    }
-    .add_button {
-      @apply  border border-primary-color rounded-md px-3 ml-2 mt-4 bg-black text-[#ffff];
+  .name_input {
+    @apply border border-primary-color rounded-md px-1 py-1 text-sm;
+  }
+  .age_input {
+    @apply border border-primary-color rounded-md px-1 mt-4 py-1 text-sm;
+  }
+  .error_text {
+    color: red;
+    font-size: 12px;
+  }
+  .add_button {
+    @apply border border-primary-color rounded-md px-3 ml-2 mt-4 bg-black text-[#ffff];
 
-      &:hover {
-        background-color: aliceblue;
-        color: black;
-        font-weight: 500;
-        font-family: Arial, Helvetica, sans-serif
-      }
+    &:hover {
+      background-color: aliceblue;
+      color: black;
+      font-weight: 500;
+      font-family: Arial, Helvetica, sans-serif;
     }
   }
+}

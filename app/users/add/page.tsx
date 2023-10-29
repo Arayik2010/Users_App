@@ -17,9 +17,7 @@ const schema = yup
       .string()
       .matches(/^([^0-9]*)$/, "First name should not container number")
       .required("Name is empty"),
-    userCurrency: yup
-      .number()
-      .required("Currency is empty"),
+    userCurrency: yup.number().required("Currency is empty"),
   })
   .required();
 
@@ -99,7 +97,7 @@ const AddUser = () => {
         <p className={styles.error_text}>{errors?.userCurrency?.message}</p>
 
         <Button classes={styles.add_button} onClick={handleSubmit(onSubmit)}>
-          Add 
+          Add
         </Button>
       </form>
 

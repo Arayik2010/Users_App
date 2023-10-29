@@ -10,7 +10,7 @@ interface UserProps {
 
 export default async function UpdateUser({ params: { id } }: UserProps) {
   const requestItem = await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`, {
-    next: { revalidate: 0 },
+    cache: 'no-store',
   });
   const responseItem = await requestItem.json();
  

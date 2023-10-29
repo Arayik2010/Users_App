@@ -21,7 +21,7 @@ const UserTable = dynamic(
 
 async function Page() {
   const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user', {
-    next: { revalidate: 0},
+    cache: 'no-store',
 
   });
   const resData = await response.json();

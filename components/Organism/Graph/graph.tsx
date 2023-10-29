@@ -39,16 +39,15 @@ const Graph = ({ dataUser }: any) => {
   
   useEffect(() => {
 
-    const week:any = [];
+    const weekDays:any = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date();
       date.setDate(date.getDate() - i);
-      week.push(moment(date).format('dddd').slice(0,3));
+      weekDays.push(moment(date).format('dddd').slice(0,3));
       
     }
-    setDays(week);
+    setDays(weekDays);
   }, []);
-
 
   const getUserCurrency = () => {
     const initialValue = 0;
@@ -61,12 +60,11 @@ const Graph = ({ dataUser }: any) => {
   };
 
   const periodDays = (selected: any) => {
-
-    setSelectedOption(selected);
-    console.log(selected.value,'value')
-    const daysWeek: any = []
+    setSelectedOption(selected)
+    const weekDays:any = []
     const daysMonth:any = []
-    if(selected.value === "month") {
+    console.log(selected,'dddd')
+    if(selected.value === "month"){
       for(let i = 0; i < 31; i++) {
         const date = new Date();
         date.setDate(date.getDate() - i);
@@ -77,18 +75,11 @@ const Graph = ({ dataUser }: any) => {
       for (let i = 0; i < 7; i++) {
         const date = new Date();
         date.setDate(date.getDate() - i);
-        daysWeek.push(moment(date).format('dddd').slice(0,3));
+        weekDays.push(moment(date).format('dddd').slice(0,3)); 
       }
-      setDays(daysWeek);
+      setDays(weekDays);
     }
   }
-
-
-  const chagePeriodSelect = () =>{
-    setSelectedOption;
-    periodDays()
-  }
-  console.log(days,'days')
 
   const dataFormat = (data: any, elemData: any) => {
     return data && data.length <= 7
@@ -100,11 +91,12 @@ const Graph = ({ dataUser }: any) => {
 
   const configData = data?.map((el: any) => {
     return {
-      weekDate: dataFormat(data, el.createData),
+      weekDate: days,
       name: el.name,
       currency: el.currency,
     };
   });
+
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
 export const requestData = async () => {
-  const response = await fetch("http://localhost:3001/user");
+  const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/user");
   const result = await response.json();
   return result;
 };
@@ -16,7 +16,8 @@ export const diffDays = (days:any) => {
     const timeEnd: any = new Date(Date.now());
     const one_day = 1000 * 60 * 60 * 24;
     const diff = Math.floor((timeEnd - startDate) / one_day);
-    if(diff > 31) {
+    console.log(diff)
+    if(diff >= 31) {
       return true
     }else{
       return false
