@@ -83,6 +83,13 @@ const Graph = ({ dataUser }: any) => {
     }
   }
 
+
+  const chagePeriodSelect = () =>{
+    setSelectedOption;
+    periodDays()
+  }
+  console.log(days,'days')
+
   const dataFormat = (data: any, elemData: any) => {
     return data && data.length <= 7
       ? moment(elemData).format("dddd").slice(0, 3)
@@ -93,12 +100,11 @@ const Graph = ({ dataUser }: any) => {
 
   const configData = data?.map((el: any) => {
     return {
-      weekDate: days,
+      weekDate: dataFormat(data, el.createData),
       name: el.name,
       currency: el.currency,
     };
   });
-
 
   return (
     <div>
