@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { requestData } from "@/components/Utils/utils";
 import Button from "@/components/Molecules/Button";
+import { UpdateUserType } from "@/interface/users";
 
 const schema = yup
   .object()
@@ -25,25 +26,27 @@ const schema = yup
   })
   .required();
 
-const UpdateUserDataForm = ({responseItem,id}:any) => {
+const UpdateUserDataForm = ({ responseItem, id }: UpdateUserType) => {
   const [value, setValue] = useState(responseItem.name);
   const [userCurrency, setUserCurrency] = useState(responseItem.currency);
   const [userUpdateModal, setUserUpdateModal] = useState(false);
   const { setUserData } = useStore();
   const router = useRouter()
 
-  // console.log(responseItem.currency ,'data')
+
+
+  console.log(responseItem, 'data')
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: {name: responseItem.name, userCurrency: responseItem.currency },
+    defaultValues: { name: responseItem.name, userCurrency: responseItem.currency },
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async(data:any) =>{
+  const onSubmit = async (data: any) => {
     try {
       await fetch(`http://localhost:3001/user/${id}`, {
         method: "PUT",
@@ -52,15 +55,15 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
         },
         body: JSON.stringify({
           id: id,
-          name:data.name,
-          currency:data.userCurrency,
+          name: data.name,
+          currency: data.userCurrency,
           createData: Date.now(),
         }),
-        
+
       });
       setUserData(await requestData());
       setUserUpdateModal(true)
-      
+
     } catch (error) {
       console.log(error);
     }
@@ -69,10 +72,10 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
   const handleRequestCloseModal = async () => {
     setUserUpdateModal(false);
     router.push('/users')
-   
+
   };
 
-  const closeUpdateModal = () =>{
+  const closeUpdateModal = () => {
     setUserUpdateModal(false)
     router.push('/users')
   }
@@ -87,7 +90,7 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
           placeholder="Name"
           name="name"
         />
-        <p className={styles.error_text}>{responseItem.name && errors?.name?.message}</p>
+        <p className={styles.error_text}>{errors?.name?.message}</p>
         <input
           className={styles.age_input}
           {...register("userCurrency")}
@@ -96,15 +99,15 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
           placeholder="Currency"
           name="userCurrency"
         />
-        <p className={styles.error_text}>{responseItem.currency && errors?.userCurrency?.message}</p>
+        <p className={styles.error_text}>{errors?.userCurrency?.message}</p>
 
         <Button classes={styles.add_button} onClick={handleSubmit(onSubmit)}>
           Update User
         </Button>
       </form>
       <UserModal
-       onlyConfirmButton={true}
-       handlerRequest={() => handleRequestCloseModal()}
+        onlyConfirmButton={true}
+        handlerRequest={() => handleRequestCloseModal()}
         modalIsOpen={userUpdateModal}
         contentTitle={`User ${value} update your data`}
         closeModal={closeUpdateModal}

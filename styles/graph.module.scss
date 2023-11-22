@@ -1,0 +1,31 @@
+.wrapper {
+    position: relative;
+  }
+  
+  .center_content {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-42%, -50%);
+    border-radius: 50%;
+    width: 500px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .star_rating {
+    width: 100%;
+    display: flex;
+    // flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .star_rating svg {
+    margin: 0 5px;
+    max-height: 20px;
+    flex: 0 0 20%;
+  }

@@ -5,7 +5,6 @@ import styles from "@/styles/users.module.scss";
 import { type } from "os";
 import React from "react";
 
-// import { Layout } from "../../..//components/Layouts/layout";
 
 interface UserProps {
   params: any;
@@ -56,8 +55,5 @@ export async function UserItem({ params: { id } }: UserProps) {
     </div>
   );
 }
-// UserItem.getLayout = function getLayout(page) {
-//   return <Layout>{page}</Layout>;
-// };
 
 export default UserItem;

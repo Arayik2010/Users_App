@@ -22,9 +22,8 @@ const schema = yup
   .required();
 
 const AddUser = () => {
-  const [value, setValue] = useState("");
-  const [userCurrency, setUserCurrency] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [nameUser, setNameUser] = useState('')
   const [data, setData] = useState();
   const router = useRouter();
 
@@ -57,20 +56,18 @@ const AddUser = () => {
           createData: new Date(),
         }),
       });
+      setNameUser(date.name)
       setIsOpen(true);
       setUserData(await requestData());
-      setValue("");
-      setUserCurrency("");
+
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleRequestCloseModal = async () => {
-    // addUserData();
     setIsOpen(false);
     router.push("/users");
-
     setData(await requestData());
   };
 
@@ -105,7 +102,7 @@ const AddUser = () => {
         onlyConfirmButton={true}
         handlerRequest={() => handleRequestCloseModal()}
         modalIsOpen={modalIsOpen}
-        contentTitle={`User ${value} will add in list`}
+        contentTitle={`User ${nameUser} will add in list`}
         closeModal={closeModal}
       />
     </div>

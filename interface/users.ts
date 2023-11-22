@@ -1,7 +1,7 @@
 export type IUser = {
   id: number | string;
   name: string;
-  currency: string;
+  currency: number;
   createData: string;
 };
 
@@ -14,3 +14,8 @@ export type IUpdateType = {
   responseItem: IUser,
   id: string | number,
 };
+
+export type UpdateUserType = {
+  responseItem: IUser;
+  id: string
+}

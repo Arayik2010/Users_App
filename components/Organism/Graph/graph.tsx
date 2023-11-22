@@ -1,6 +1,7 @@
 "use client";
 import Select from "react-select";
 import React, { useEffect, useState } from "react";
+import styles from '@/styles/graph.module.scss'
 import {
   Area,
   AreaChart,
@@ -11,6 +12,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  Label
 } from "recharts";
 import moment, { utc } from "moment/moment";
 import GraphFileTitle from "@/components/Molecules/graphFileTitle";
@@ -31,20 +33,21 @@ const Graph = ({ dataUser }: any) => {
   const [days, setDays] = useState<any>([]);
   const { userData } = useStore();
 
+
   useEffect(() => {
     getUserCurrency();
     setData(userData.length ? userData : dataUser);
-  }, [dataUser, userData,selectedOption]);
+  }, [dataUser, userData, selectedOption]);
 
-  
+
   useEffect(() => {
 
-    const weekDays:any = [];
+    const weekDays: any = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date();
       date.setDate(date.getDate() - i);
-      weekDays.push(moment(date).format('dddd').slice(0,3));
-      
+      weekDays.push(moment(date).format('dddd').slice(0, 3));
+
     }
     setDays(weekDays);
   }, []);
@@ -61,21 +64,21 @@ const Graph = ({ dataUser }: any) => {
 
   const periodDays = (selected: any) => {
     setSelectedOption(selected)
-    const weekDays:any = []
-    const daysMonth:any = []
-    console.log(selected,'dddd')
-    if(selected.value === "month"){
-      for(let i = 0; i < 31; i++) {
+    const weekDays: any = []
+    const daysMonth: any = []
+    console.log(selected, 'dddd')
+    if (selected.value === "month") {
+      for (let i = 0; i < 31; i++) {
         const date = new Date();
         date.setDate(date.getDate() - i);
-        daysMonth.push(moment(date).format('L').slice(3,5))
+        daysMonth.push(moment(date).format('L').slice(3, 5))
       }
       setDays(daysMonth)
-    }if(selected.value === "7 days") {
+    } if (selected.value === "7 days") {
       for (let i = 0; i < 7; i++) {
         const date = new Date();
         date.setDate(date.getDate() - i);
-        weekDays.push(moment(date).format('dddd').slice(0,3)); 
+        weekDays.push(moment(date).format('dddd').slice(0, 3));
       }
       setDays(weekDays);
     }
@@ -85,9 +88,12 @@ const Graph = ({ dataUser }: any) => {
     return data && data.length <= 7
       ? moment(elemData).format("dddd").slice(0, 3)
       : (data.length >= 7 && data.length) <= 31
-      ? moment(elemData).format("L").slice(3, 5)
-      : moment(elemData).format("MMM Do YY").slice(0, 3);
+        ? moment(elemData).format("L").slice(3, 5)
+        : moment(elemData).format("MMM Do YY").slice(0, 3);
   };
+  
+
+
 
   const configData = data?.map((el: any) => {
     return {
@@ -98,8 +104,10 @@ const Graph = ({ dataUser }: any) => {
   });
 
 
+  
+
   return (
-    <div>
+    <div className={styles.wrapper}>
       <div className="flex justify-between gap-4 items-center">
         <GraphFileTitle
           title="Our Graph Information"
@@ -113,7 +121,7 @@ const Graph = ({ dataUser }: any) => {
           options={options}
         />
       </div>
-
+{/* 
       <LineChart
         width={730}
         height={250}
@@ -132,7 +140,22 @@ const Graph = ({ dataUser }: any) => {
         <Legend />
         <Line type="monotone" dataKey="name" stroke="#8884d8" />
         <Line type="monotone" dataKey="currency" stroke="#82ca9d" />
-      </LineChart>
+      </LineChart> */}
+      <AreaChart
+        width={730}
+        height={250}
+        data={configData}
+        margin={{
+          top: 20, right: 20, bottom: 20, left: 20,
+        }}
+      >
+        <XAxis dataKey="weekDate" />
+        <YAxis />
+        <Area dataKey="name" stroke="#8884d8" fill="#8884d8" />
+        <Area dataKey="currency" stroke="#8884d8" fill="#8884d8" />
+        <Label value="dsfsd" position="centerBottom" offset={2} />
+        <Tooltip />
+      </AreaChart>
     </div>
   );
 };

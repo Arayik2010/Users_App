@@ -27,6 +27,8 @@ const UserTable = ({ resData }: any) => {
   const { userData, setUserData } = useStore();
   let pageSize = 5;
 
+
+
   const chunk = data.reduce(
     (acc: any, _: any, i: any) =>
       i % pageSize ? acc : [...acc, data && data.slice(i, i + pageSize)],
@@ -41,11 +43,15 @@ const UserTable = ({ resData }: any) => {
 
   useEffect(() => {
     setData(userData.length ? userData : resData);
-  }, [userData]);
+    console.log(deleteOpenModal,'delete modal')
+  }, [userData,deleteOpenModal]);
+
+ 
 
   const closeDeleteModal = () => {
     setDeleteOpenModal(false);
   };
+
 
   const deleteRecord = async (id: string) => {
     try {
@@ -140,7 +146,7 @@ const UserTable = ({ resData }: any) => {
         id={"0"}
         handlerRequest={() => deleteRecord(deleteOpenModal.id)}
         modalIsOpen={!!deleteOpenModal}
-        contentTitle={`User deleted from list`}
+        contentTitle={`User  ${deleteOpenModal.name} deleted from list`}
         closeRequestModal={closeDeleteModal}
         handleDeleteButton={"Delete"}
         handleDeclineButton={"Cansel"}
