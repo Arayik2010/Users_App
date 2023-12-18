@@ -3,6 +3,7 @@ export type IUser = {
   name: string;
   currency: string;
   createData: string;
+  checked?: boolean
 };
 
 export type IPopoverType = {

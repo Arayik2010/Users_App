@@ -22,6 +22,7 @@ const schema = yup
     userCurrency: yup
       .number()
       .required("Currency is empty"),
+      subscribe: yup.string()
   })
   .required();
 
@@ -30,18 +31,24 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
   const [userCurrency, setUserCurrency] = useState(responseItem.currency);
   const [userUpdateModal, setUserUpdateModal] = useState(false);
   const { setUserData } = useStore();
+  const [isChecked, setIsChecked] = useState<any>(responseItem.checked);
+
   const router = useRouter()
 
-  // console.log(responseItem.currency ,'data')
+  console.log(responseItem.checked ,'data')
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: {name: responseItem.name, userCurrency: responseItem.currency },
+    defaultValues: {name: responseItem.name, userCurrency: responseItem.currency, subscribe: responseItem.checked },
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
+
+  const handleChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   const onSubmit = async(data:any) =>{
     try {
@@ -55,6 +62,7 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
           name:data.name,
           currency:data.userCurrency,
           createData: Date.now(),
+          checked: data.subscribe
         }),
         
       });
@@ -97,6 +105,19 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
           name="userCurrency"
         />
         <p className={styles.error_text}>{responseItem.currency && errors?.userCurrency?.message}</p>
+        <div className="mt-5  flex item-center pl-4 ">
+          <input
+            {...register('subscribe')}
+            name="subscribe"
+            className="w-5 h-5 "
+            id="subscribe"
+            value={isChecked}
+            type="checkbox"
+            onChange={handleChange}
+
+          />
+          <p className="pl-4 text-sm">Add check</p>
+          </div>
 
         <Button classes={styles.add_button} onClick={handleSubmit(onSubmit)}>
           Update User
