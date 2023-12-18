@@ -18,6 +18,10 @@ const schema = yup
       .matches(/^([^0-9]*)$/, "First name should not container number")
       .required("Name is empty"),
     userCurrency: yup.number().required("Currency is empty"),
+    subscribe: yup.string()
+    
+  
+
   })
   .required();
 
@@ -27,6 +31,7 @@ const AddUser = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
   const router = useRouter();
+  const [isChecked, setIsChecked] = useState<any>(false);
 
   const { userData, setUserData } = useStore();
 
@@ -55,6 +60,7 @@ const AddUser = () => {
           name: date.name,
           currency: date.userCurrency,
           createData: new Date(),
+          checked: date.subscribe
         }),
       });
       setIsOpen(true);
@@ -73,6 +79,13 @@ const AddUser = () => {
 
     setData(await requestData());
   };
+
+  const handleChange = () => {
+
+    setIsChecked(!isChecked);
+
+  };
+  console.log(isChecked, 'checked')
 
   return (
     <div className={styles.container_inputs}>
@@ -95,6 +108,19 @@ const AddUser = () => {
           name="userCurrency"
         />
         <p className={styles.error_text}>{errors?.userCurrency?.message}</p>
+        <div className="mt-5  flex item-center pl-4 ">
+          <input
+            {...register('subscribe')}
+            name="subscribe"
+            className="w-5 h-5 "
+            id="subscribe"
+            value={isChecked}
+            type="checkbox"
+            onChange={handleChange}
+
+          />
+          <p className="pl-4 text-sm">Add check</p>
+        </div>
 
         <Button classes={styles.add_button} onClick={handleSubmit(onSubmit)}>
           Add

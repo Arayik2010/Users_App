@@ -22,7 +22,7 @@ const UserTable = ({ resData }: any) => {
   const [data, setData] = useState(resData || []);
   const [pageCount, setPageCount] = useState(1);
   const [activePage, setActivePage] = useState(1);
-  const [chunkData, setChunkData] = useState([]);
+  const [chunkData, setChunkData] = useState<any>([]);
   const [deleteOpenModal, setDeleteOpenModal] = useState<any>(false);
   const { userData, setUserData } = useStore();
   let pageSize = 5;
@@ -32,6 +32,20 @@ const UserTable = ({ resData }: any) => {
       i % pageSize ? acc : [...acc, data && data.slice(i, i + pageSize)],
     []
   );
+  console.log(chunkData, 'ggg')
+
+  const sortUsers = (users: any) => {
+
+    const sortItems = users.sort((a: any, b: any) => a.currency - b.currency)
+    return sortItems
+
+
+  }
+
+
+  useEffect(() => {
+    sortUsers(chunkData)
+  })
 
   useEffect(() => {
     setPageCount(Math.ceil(data.length / pageSize));
@@ -40,7 +54,7 @@ const UserTable = ({ resData }: any) => {
   }, [activePage, data, userData]);
 
   useEffect(() => {
-    setData(userData.length ? userData : resData);
+    setData(userData.length ? sortUsers(userData) : sortUsers(resData));
   }, [userData]);
 
   const closeDeleteModal = () => {
@@ -96,7 +110,7 @@ const UserTable = ({ resData }: any) => {
                 <th className={styles.th} scope="row">
                   <Link href={`/users/${el.id}`}>{el.name}</Link>
                 </th>
-                <td className={styles.td}>{el.currency}</td>
+                <td className={styles.td}> {el.checked ? '$' : 'AMD'} {el.currency}</td>
                 <td className={styles.td}>{updateDataFormat(el.createData)}</td>
                 <td className={styles.td}>
                   <div className="flex justify-center items-center">
