@@ -17,14 +17,17 @@ import UserModal from "../Modal/modal";
 import Image from "next/image";
 import WarningIcon from "@/components/Icons/warningIcon";
 import ChackedIcon from "@/components/Icons/checkedIcon";
+import useDebunce from "@/hooks/useDebunce"
 
 const UserTable = ({ resData }: any) => {
   const [data, setData] = useState(resData || []);
   const [pageCount, setPageCount] = useState(1);
   const [activePage, setActivePage] = useState(1);
   const [chunkData, setChunkData] = useState<any>([]);
+  const [value, setValue] = useState('')
   const [deleteOpenModal, setDeleteOpenModal] = useState<any>(false);
   const { userData, setUserData } = useStore();
+  const debunceSearchHandle = useDebunce(searchDataUser, 500)
   let pageSize = 5;
 
   const chunk = data.reduce(
@@ -32,20 +35,6 @@ const UserTable = ({ resData }: any) => {
       i % pageSize ? acc : [...acc, data && data.slice(i, i + pageSize)],
     []
   );
-  console.log(chunkData, 'ggg')
-
-  const sortUsers = (users: any) => {
-
-    const sortItems = users.sort((a: any, b: any) => a.currency - b.currency)
-    return sortItems
-
-
-  }
-
-
-  useEffect(() => {
-    sortUsers(chunkData)
-  })
 
   useEffect(() => {
     setPageCount(Math.ceil(data.length / pageSize));
@@ -54,7 +43,7 @@ const UserTable = ({ resData }: any) => {
   }, [activePage, data, userData]);
 
   useEffect(() => {
-    setData(userData.length ? sortUsers(userData) : sortUsers(resData));
+    setData(userData.length ? userData : resData);
   }, [userData]);
 
   const closeDeleteModal = () => {
@@ -74,11 +63,19 @@ const UserTable = ({ resData }: any) => {
       console.log(error);
     }
   };
-  const searchDataUser = async (userName: string) => {
-    await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/user?name=${userName}`)
+
+  function searchDataUser (userName: string) {
+     fetch(process.env.NEXT_PUBLIC_BASE_URL + `/user?name=${userName}`)
       .then((res) => res.json())
       .then((res) => setData(res));
   };
+
+
+  const onChnage = (e: any) => {
+    setValue(e.target.value)
+    debunceSearchHandle(e.target.value)
+  }
+
 
   return (
     <div className="w-full">
@@ -86,7 +83,7 @@ const UserTable = ({ resData }: any) => {
         className={styles.search_input}
         placeholder="search..."
         type="text"
-        onChange={(e) => searchDataUser(e.target.value)}
+        onChange={onChnage}
       />
       <table className={styles.table}>
         <tbody>
