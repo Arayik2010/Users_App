@@ -9,6 +9,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import UserModal from "@/components/Organism/Modal/modal";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Molecules/Button";
+import UsersService from "@/srevice/users";
+
 
 const schema = yup
   .object()
@@ -34,6 +36,7 @@ const AddUser = () => {
   const [isChecked, setIsChecked] = useState<any>(false);
 
   const { userData, setUserData } = useStore();
+  const usersService = UsersService.getInstance();
 
   const {
     register,
@@ -50,27 +53,21 @@ const AddUser = () => {
 
   const onSubmit = async (date: any) => {
     try {
-      await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/user", {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
+      await usersService.create({
           id: Math.floor(Math.random() * 100),
           name: date.name,
           currency: date.userCurrency,
           createData: new Date(),
           checked: date.subscribe
-        }),
       });
       setIsOpen(true);
-      setUserData(await requestData());
+      setUserData(await usersService.listUsers());
       setValue("");
       setUserCurrency("");
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   const handleRequestCloseModal = async () => {
     // addUserData();

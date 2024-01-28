@@ -1,6 +1,7 @@
 import BackFileCollection from "@/components/Molecules/BackFileColection";
 import Box from "@/components/Molecules/Box";
 import { updateDataFormat } from "@/components/Utils/utils";
+import UsersService from "@/srevice/users";
 import styles from "@/styles/users.module.scss";
 import { type } from "os";
 import React from "react";
@@ -10,15 +11,18 @@ import React from "react";
 interface UserProps {
   params: any;
 }
-
+const usersService = UsersService.getInstance();
 export async function UserItem({ params: { id } }: UserProps) {
-  const requestItem = await fetch(
-    process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
-  const responseItem = await requestItem.json();
+  // const requestItem = await fetch(
+  //   process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`,
+  //   {
+  //     cache: "no-store",
+  //   }
+  // );
+  // const responseItem = await requestItem.json();
+  const responseItem:any = await usersService.listUsers(id, {cache: "no-store",})
+  console.log(responseItem)
+
 
   return (
     <div>
@@ -42,11 +46,11 @@ export async function UserItem({ params: { id } }: UserProps) {
             </tr>
             <tr className={styles.tr}>
               <th className={styles.th} scope="row">
-                {responseItem.name}
+                {responseItem.data.name}
               </th>
-              <td className={styles.td}>{responseItem.currency}</td>
+              <td className={styles.td}>{responseItem.data.currency}</td>
               <td className={styles.td}>
-                {updateDataFormat(responseItem.createData)}
+                {updateDataFormat(responseItem.data.createData)}
               </td>
               <td className={styles.td}></td>
             </tr>

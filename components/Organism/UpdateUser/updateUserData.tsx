@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { requestData } from "@/components/Utils/utils";
 import Button from "@/components/Molecules/Button";
+import UsersService from "@/srevice/users";
 
 const schema = yup
   .object()
@@ -32,6 +33,7 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
   const [userUpdateModal, setUserUpdateModal] = useState(false);
   const { setUserData } = useStore();
   const [isChecked, setIsChecked] = useState<any>(responseItem.checked);
+  const usersService = UsersService.getInstance();
 
   const router = useRouter()
 
@@ -52,21 +54,14 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
 
   const onSubmit = async(data:any) =>{
     try {
-      await fetch(`http://localhost:3001/user/${id}`, {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
+      await usersService.update(id, {
           id: id,
           name:data.name,
           currency:data.userCurrency,
           createData: Date.now(),
-          checked: data.subscribe
-        }),
-        
+          checked: data.subscribe     
       });
-      setUserData(await requestData());
+      setUserData(await usersService.listUsers());
       setUserUpdateModal(true)
       
     } catch (error) {

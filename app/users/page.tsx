@@ -6,6 +6,7 @@ import styles from "../../styles/users.module.scss";
 import Box from "@/components/Molecules/Box";
 import dynamic from "next/dynamic";
 import FileCollectionTitle from "@/components/Molecules/fileCollectionTitle";
+import UsersService from "@/srevice/users";
 
 
 
@@ -20,11 +21,14 @@ const UserTable = dynamic(
 );
 
 async function Page() {
+  // const usersService = UsersService.getInstance();
+  // const resData = await usersService.listUsers()
   const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user', {
     cache: 'no-store',
 
   });
   const resData = await response.json();
+
 
   return (
     <div className={styles.container}>
