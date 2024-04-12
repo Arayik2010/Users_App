@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import styles from "@/styles/addUser.module.scss";
 import { useForm } from "react-hook-form";
 import { requestData } from "@/components/Utils/utils";
@@ -10,7 +10,7 @@ import UserModal from "@/components/Organism/Modal/modal";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Molecules/Button";
 import UsersService from "@/srevice/users";
-
+import { useReportWebVitals } from 'next/web-vitals'
 
 const schema = yup
   .object()
@@ -21,9 +21,6 @@ const schema = yup
       .required("Name is empty"),
     userCurrency: yup.number().required("Currency is empty"),
     subscribe: yup.string()
-    
-  
-
   })
   .required();
 
@@ -34,9 +31,14 @@ const AddUser = () => {
   const [data, setData] = useState();
   const router = useRouter();
   const [isChecked, setIsChecked] = useState<any>(false);
-
   const { userData, setUserData } = useStore();
+  const [gggg, setgggg] = useState(false)
   const usersService = UsersService.getInstance();
+
+useEffect(() => {
+  console.log('hello')
+
+},[])
 
   const {
     register,
@@ -50,18 +52,20 @@ const AddUser = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+  const idItem = useId()
 
   const onSubmit = async (date: any) => {
     try {
       await usersService.create({
-          id: Math.floor(Math.random() * 100),
-          name: date.name,
-          currency: date.userCurrency,
-          createData: new Date(),
-          checked: date.subscribe
+        id: idItem,
+        name: date.name,
+        currency: date.userCurrency,
+        createData: new Date(),
+        checked: date.subscribe
       });
       setIsOpen(true);
-      setUserData(await usersService.listUsers());
+      const response = await usersService.listUsers()
+      setUserData(response.data);
       setValue("");
       setUserCurrency("");
     } catch (error) {
@@ -70,7 +74,6 @@ const AddUser = () => {
   }
 
   const handleRequestCloseModal = async () => {
-    // addUserData();
     setIsOpen(false);
     router.push("/users");
 
@@ -78,11 +81,11 @@ const AddUser = () => {
   };
 
   const handleChange = () => {
-
     setIsChecked(!isChecked);
-
   };
-  console.log(isChecked, 'checked')
+  useReportWebVitals((metric) => {
+    console.log(metric,'metric')
+  })
 
   return (
     <div className={styles.container_inputs}>
@@ -114,7 +117,6 @@ const AddUser = () => {
             value={isChecked}
             type="checkbox"
             onChange={handleChange}
-
           />
           <p className="pl-4 text-sm">Add check</p>
         </div>
@@ -123,7 +125,6 @@ const AddUser = () => {
           Add
         </Button>
       </form>
-
       <UserModal
         onlyConfirmButton={true}
         handlerRequest={() => handleRequestCloseModal()}
