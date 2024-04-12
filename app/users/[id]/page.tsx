@@ -13,16 +13,7 @@ interface UserProps {
 }
 const usersService = UsersService.getInstance();
 export async function UserItem({ params: { id } }: UserProps) {
-  // const requestItem = await fetch(
-  //   process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`,
-  //   {
-  //     cache: "no-store",
-  //   }
-  // );
-  // const responseItem = await requestItem.json();
-  const responseItem:any = await usersService.listUsers(id, {cache: "no-store",})
-  console.log(responseItem)
-
+  const responseItem: any = await usersService.listUsers(id, { cache: "no-store", })
 
   return (
     <div>

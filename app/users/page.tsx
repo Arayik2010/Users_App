@@ -29,7 +29,6 @@ async function Page() {
   });
   const resData = await response.json();
 
-
   return (
     <div className={styles.container}>
       <FileCollectionTitle

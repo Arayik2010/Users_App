@@ -18,6 +18,7 @@ import Image from "next/image";
 import WarningIcon from "@/components/Icons/warningIcon";
 import ChackedIcon from "@/components/Icons/checkedIcon";
 import useDebunce from "@/hooks/useDebunce"
+import UsersService from "@/srevice/users";
 
 const UserTable = ({ resData }: any) => {
   const [data, setData] = useState(resData || []);
@@ -28,6 +29,7 @@ const UserTable = ({ resData }: any) => {
   const [deleteOpenModal, setDeleteOpenModal] = useState<any>(false);
   const { userData, setUserData } = useStore();
   const debunceSearchHandle = useDebunce(searchDataUser, 500)
+  const usersService = UsersService.getInstance();
   let pageSize = 5;
 
   const chunk = data.reduce(
@@ -41,6 +43,7 @@ const UserTable = ({ resData }: any) => {
     const dataChunk = chunk[activePage - 1];
     setChunkData(dataChunk);
   }, [activePage, data, userData]);
+  console.log(resData, 'iii')
 
   useEffect(() => {
     setData(userData.length ? userData : resData);
@@ -52,22 +55,23 @@ const UserTable = ({ resData }: any) => {
 
   const deleteRecord = async (id: string) => {
     try {
-      await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`, {
-        method: "DELETE",
-      })
-        .then((res) => res.json())
-        .then((res) => setData(res));
-      setUserData(await requestData());
+      await usersService.itemDelete(id);
+      const response = await usersService.listUsers()
+      setUserData(response.data);
       setDeleteOpenModal(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-  function searchDataUser (userName: string) {
-     fetch(process.env.NEXT_PUBLIC_BASE_URL + `/user?name=${userName}`)
-      .then((res) => res.json())
-      .then((res) => setData(res));
+  async function searchDataUser(userName: string) {
+    try {
+      const resData = await usersService.searchListItem(userName);
+      setData(resData.data)
+
+    } catch (e) {
+      console.log(e)
+    }
   };
 
 
@@ -75,8 +79,7 @@ const UserTable = ({ resData }: any) => {
     setValue(e.target.value)
     debunceSearchHandle(e.target.value)
   }
-
-
+  
   return (
     <div className="w-full">
       <input
@@ -155,8 +158,8 @@ const UserTable = ({ resData }: any) => {
         closeRequestModal={closeDeleteModal}
         handleDeleteButton={"Delete"}
         handleDeclineButton={"Cansel"}
-        deleteButtonClass="px-10 py-2 bg-red-500 text-white"
-        declineButtonClass="px-10 py-2 border-black  text-black"
+        deleteButtonClass="px-10 py-2 bg-delete_button text-delete_text"
+        declineButtonClass="px-10 py-2 border-black  text-cancel_text"
       />
     </div>
   );

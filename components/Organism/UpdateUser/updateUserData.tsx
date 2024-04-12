@@ -31,13 +31,11 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
   const [value, setValue] = useState(responseItem.name);
   const [userCurrency, setUserCurrency] = useState(responseItem.currency);
   const [userUpdateModal, setUserUpdateModal] = useState(false);
-  const { setUserData } = useStore();
+  const {userData, setUserData } = useStore();
   const [isChecked, setIsChecked] = useState<any>(responseItem.checked);
   const usersService = UsersService.getInstance();
 
   const router = useRouter()
-
-  console.log(responseItem.checked ,'data')
   const {
     register,
     handleSubmit,
@@ -61,13 +59,13 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
           createData: Date.now(),
           checked: data.subscribe     
       });
-      setUserData(await usersService.listUsers());
+      const response = await usersService.listUsers()
+      setUserData(response.data);
       setUserUpdateModal(true)
       
     } catch (error) {
       console.log(error);
     }
-    // router.push('/posts/users')
   }
   const handleRequestCloseModal = async () => {
     setUserUpdateModal(false);

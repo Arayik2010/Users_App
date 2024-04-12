@@ -26,7 +26,7 @@ export default class UsersService {
             throw e;
         }
     }
-    public async update( id: any, params: any) {
+    public async update(id: any, params: any) {
         try {
             const response = await axios.put(
                 process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`,
@@ -38,10 +38,10 @@ export default class UsersService {
         }
     }
 
-    public async listUsers(id?: any, cache?:any) {
+    public async listUsers(id?: any, cache?: any) {
         try {
             const response = await axios.get(
-                process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`, cache
+                process.env.NEXT_PUBLIC_BASE_URL + `/user/${id ? id : ''}`, cache
             );
             return response;
         } catch (e) {
@@ -49,5 +49,27 @@ export default class UsersService {
         }
     }
 
+    public async searchListItem(name: string) {
+        try {
+            const response = await axios.get(
+                process.env.NEXT_PUBLIC_BASE_URL + `/user?name=${name}`
+            );
+            return response;
+        } catch (e) {
+            throw e
+        }
+    }
+
+    public async itemDelete(id: any) {
+        try {
+            const response = await axios.delete(
+                process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`
+            );
+            return response
+
+        } catch (e) {
+            throw e
+        }
+    }
 
 }
