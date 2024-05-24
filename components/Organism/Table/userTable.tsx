@@ -31,7 +31,7 @@ const UserTable = ({ resData }: any) => {
   const debunceSearchHandle = useDebunce(searchDataUser, 500)
   const usersService = UsersService.getInstance();
   let pageSize = 5;
-
+ 
   const chunk = data.reduce(
     (acc: any, _: any, i: any) =>
       i % pageSize ? acc : [...acc, data && data.slice(i, i + pageSize)],
@@ -43,8 +43,7 @@ const UserTable = ({ resData }: any) => {
     const dataChunk = chunk[activePage - 1];
     setChunkData(dataChunk);
   }, [activePage, data, userData]);
-  console.log(resData, 'iii')
-
+  
   useEffect(() => {
     setData(userData.length ? userData : resData);
   }, [userData]);
@@ -73,7 +72,6 @@ const UserTable = ({ resData }: any) => {
       console.log(e)
     }
   };
-
 
   const onChnage = (e: any) => {
     setValue(e.target.value)
@@ -106,9 +104,9 @@ const UserTable = ({ resData }: any) => {
           </tr>
           {chunkData &&
             chunkData.map((el: IUser) => (
-              <tr className={styles.tr} key={el.id}>
+              <tr className={styles.tr} key={el._id}>
                 <th className={styles.th} scope="row">
-                  <Link href={`/users/${el.id}`}>{el.name}</Link>
+                  <Link href={`/users/${el._id}`}>{el.name}</Link>
                 </th>
                 <td className={styles.td}> {el.checked ? '$' : 'AMD'} {el.currency}</td>
                 <td className={styles.td}>{updateDataFormat(el.createData)}</td>
@@ -130,7 +128,7 @@ const UserTable = ({ resData }: any) => {
                       >
                         Delete
                       </button>
-                      <Link className="ml-2" href={`/users/edit/${el.id}`}>
+                      <Link className="ml-2" href={`/users/edit/${el._id}`}>
                         <button className={styles.button}>Details</button>
                       </Link>
                     </PagePopover>

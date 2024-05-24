@@ -1,6 +1,8 @@
+import ChackedIcon from "@/components/Icons/checkedIcon";
+import WarningIcon from "@/components/Icons/warningIcon";
 import BackFileCollection from "@/components/Molecules/BackFileColection";
 import Box from "@/components/Molecules/Box";
-import { updateDataFormat } from "@/components/Utils/utils";
+import { diffDays, updateDataFormat } from "@/components/Utils/utils";
 import UsersService from "@/srevice/users";
 import styles from "@/styles/users.module.scss";
 import { type } from "os";
@@ -43,7 +45,19 @@ export async function UserItem({ params: { id } }: UserProps) {
               <td className={styles.td}>
                 {updateDataFormat(responseItem.data.createData)}
               </td>
-              <td className={styles.td}></td>
+              <td className={styles.td}>
+              <div className="flex justify-center items-center">
+                {diffDays(responseItem.data.createData) ? (
+                  <div>
+                    <WarningIcon />
+                  </div>
+                ) : (
+                  <div>
+                    <ChackedIcon />
+                  </div>
+                )}
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>

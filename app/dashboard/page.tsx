@@ -7,28 +7,28 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const Dashboard = () => {
-  // const notify = () => {toast.error("Wow so easy!"),  toast.success("Success Notification !")} ;
-  function notify() {
-        if (!Notification) {
-      alert("Desktop notifications not available in your browser");
-      return;
-    }
+  const notify = () => {toast.error("Wow so easy!"),  toast.success("Success Notification !")} ;
+  // function notify() {
+  //       if (!Notification) {
+  //     alert("Desktop notifications not available in your browser");
+  //     return;
+  //   }
 
-    if (Notification.permission !== "granted")
-      Notification.requestPermission();
-    else {
-      const notification = new Notification("New Message", {
-        icon:
-          "http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png",
-        body: "You have a new Message",
-      });
-      console.log(notification,'ffffff')
-      notification.onclick = function () { 
-        window.focus();
-        this.close();
-      };
-    }
-  }
+  //   if (Notification.permission !== "granted")
+  //     Notification.requestPermission();
+  //   else {
+  //     const notification = new Notification("New Message", {
+  //       icon:
+  //         "http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png",
+  //       body: "You have a new Message",
+  //     });
+  //     console.log(notification,'ffffff')
+  //     notification.onclick = function () { 
+  //       window.focus();
+  //       this.close();
+  //     };
+  //   }
+  // }
 
   return (
     <div>
