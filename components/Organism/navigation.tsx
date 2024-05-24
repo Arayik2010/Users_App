@@ -1,12 +1,16 @@
 import Link from 'next/link'
 import React from 'react'
+import { MainRoutes } from '../Utils/main.routes'
+import NavLink from '../Molecules/NavLink'
 
 const Navigation = () => {
   return (
     <div className='flex gap-20 justify-center w-1/2 m-auto'>
-        <Link href='/dashboard'>Dashboard</Link>
-        <Link href='/users'>Users</Link>
-        <Link href='/'>Login</Link>
+      {
+        MainRoutes?.map((route:any, index) => (
+          <NavLink key={index} routes={route}/>
+        ))
+      }
     </div>
   )
 }

@@ -35,10 +35,10 @@ const AddUser = () => {
   const [gggg, setgggg] = useState(false)
   const usersService = UsersService.getInstance();
 
-useEffect(() => {
-  console.log('hello')
+  useEffect(() => {
+    console.log('hello')
 
-},[])
+  }, [])
 
   const {
     register,
@@ -84,20 +84,20 @@ useEffect(() => {
     setIsChecked(!isChecked);
   };
   useReportWebVitals((metric) => {
-    console.log(metric,'metric')
+    console.log(metric, 'metric')
   })
 
   return (
     <div className={styles.container_inputs}>
       <form className="validation" onSubmit={handleSubmit(onSubmit)}>
-        <input
+        {/* <input
           className={styles.name_input}
           {...register("name")}
           id="name"
           type="text"
           placeholder="Name"
           name="name"
-        />
+        /> */}
         <p className={styles.error_text}>{errors?.name?.message}</p>
         <input
           className={styles.age_input}
