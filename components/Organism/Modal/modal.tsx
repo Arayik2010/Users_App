@@ -63,7 +63,7 @@ const UserModal = ({
         </div>
         <div className="text-center">
           {showHandleButtons ?
-            <div className="flex  mt-6 px-6 ">
+            <div className="flex  mt-6 px-6 gap-4 ">
               <div><button onClick={closeRequestModal} className={`border m-auto rounded-md ${declineButtonClass}`}>{handleDeclineButton}</button></div>
               <div><button onClick={(id) => handlerRequest(id)} className={`border m-auto rounded-md ${deleteButtonClass}`}>{handleDeleteButton}</button></div>
             </div> : null

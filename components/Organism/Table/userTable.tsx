@@ -37,6 +37,7 @@ const UserTable = ({ resData }: any) => {
       i % pageSize ? acc : [...acc, data && data.slice(i, i + pageSize)],
     []
   );
+  console.log(deleteOpenModal,'kkk')
 
   useEffect(() => {
     setPageCount(Math.ceil(data.length / pageSize));
@@ -56,6 +57,7 @@ const UserTable = ({ resData }: any) => {
     try {
       await usersService.itemDelete(id);
       const response = await usersService.listUsers()
+      console.log(response)
       setUserData(response.data);
       setDeleteOpenModal(false);
     } catch (error) {
@@ -150,7 +152,7 @@ const UserTable = ({ resData }: any) => {
       <UserModal
         showHandleButtons={true}
         id={"0"}
-        handlerRequest={() => deleteRecord(deleteOpenModal.id)}
+        handlerRequest={() => deleteRecord(deleteOpenModal._id)}
         modalIsOpen={!!deleteOpenModal}
         contentTitle={`User deleted from list`}
         closeRequestModal={closeDeleteModal}
