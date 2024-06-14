@@ -1,14 +1,14 @@
 export interface IModal {
-    modalIsOpen?:any;
-    contentTitle?: any;
-    closeModal?: any;
-    handlerRequest?: any;
-    showHandleButtons?: any;
-    handleDeleteButton?: any;
-    handleDeclineButton?: any;
-    onlyConfirmButton?: any;
-    deleteButtonClass?: any;
-    declineButtonClass?: any;
-    closeRequestModal?: any;
-    id?: any
+    modalIsOpen: boolean;
+    contentTitle: string;
+    closeModal?: (props:any) => void ;
+    handlerRequest:(props:any) => void;
+    showHandleButtons?: boolean;
+    handleDeleteButton?: string;
+    handleDeclineButton?: string;
+    onlyConfirmButton?: boolean;
+    deleteButtonClass?: string;
+    declineButtonClass?: string;
+    closeRequestModal?: () => void;
+    id?: string
 }

@@ -1,16 +1,16 @@
 
 
 .container {
-    @apply  m-auto px-6 bg-[#DFE1E1];
+    @apply  m-auto px-6 w-full ;
   
     .container_inputs {
-      @apply m-auto max-w-3xl text-center py-3;
+      @apply  flex justify-center  m-auto max-w-3xl w-[100%] text-center  py-3;
   
       .name_input {
-        @apply  border border-primary-color rounded-md px-1 py-1;
+        @apply  border border-primary-color rounded-md px-1 w-[100%] py-2;
       }
       .age_input {
-        @apply  border border-primary-color rounded-md px-1 ml-2 py-1;
+        @apply  border border-primary-color rounded-md px-1 ml-2 w-[100%] py-2;
       }
       .add_button {
         @apply  border border-primary-color rounded-md px-3 ml-2 mt-4 bg-black text-[#ffff];

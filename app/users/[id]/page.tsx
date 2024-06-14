@@ -8,7 +8,6 @@ import styles from "@/styles/users.module.scss";
 import { type } from "os";
 import React from "react";
 
-// import { Layout } from "../../..//components/Layouts/layout";
 
 interface UserProps {
   params: any;
