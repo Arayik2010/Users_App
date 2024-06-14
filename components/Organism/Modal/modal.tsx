@@ -16,20 +16,19 @@ const customStyles = {
     left: "50%",
     right: "auto",
     bottom: "auto",
+    padding: 40,
     width: "auto",
-    height: "250px",
+    height: "auto",
     marginRight: "-50%",
     border: "2px solid silver",
+    borderRadius: "8px",
     transform: "translate(-50%, -50%)",
   },
-
-
 };
 
 const UserModal = ({
   modalIsOpen,
   contentTitle,
-  closeModal,
   handlerRequest,
   showHandleButtons,
   handleDeleteButton,
@@ -38,8 +37,6 @@ const UserModal = ({
   deleteButtonClass,
   declineButtonClass,
   closeRequestModal,
-  id
-
 }: IModal) => {
   return (
     <div>
@@ -70,7 +67,7 @@ const UserModal = ({
           }
           {onlyConfirmButton ? (
             <button
-              className="bg-[#0A214A] rounded-md text-white px-32 mt-4 m-auto py-1"
+              className="bg-[#0A214A] rounded-md text-white px-32 mt-4 m-auto py-2"
               onClick={(id) => handlerRequest(id)}
             >
               Continue

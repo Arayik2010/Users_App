@@ -28,7 +28,7 @@ export default class UsersService {
     }
     public async update(id: any, params: any) {
         try {
-            const response = await axios.put(
+            const response = await axios.patch(
                 process.env.NEXT_PUBLIC_BASE_URL + `/user/${id}`,
                 params
             );

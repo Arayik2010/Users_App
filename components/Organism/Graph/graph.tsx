@@ -2,8 +2,6 @@
 import Select from "react-select";
 import React, { useEffect, useState } from "react";
 import {
-  Area,
-  AreaChart,
   CartesianGrid,
   Legend,
   Line,
@@ -16,8 +14,6 @@ import {
 import moment, { utc } from "moment/moment";
 import GraphFileTitle from "@/components/Molecules/graphFileTitle";
 import { useStore } from "@/Store/store";
-import { IUser } from "@/interface/users";
-
 
 const options = [
   { value: "7 days", label: "7 Days" },
@@ -39,13 +35,11 @@ const Graph = ({ dataUser }: any) => {
 
   
   useEffect(() => {
-
     const weekDays:any = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date();
       date.setDate(date.getDate() - i);
-      weekDays.push(moment(date).format('dddd').slice(0,3));
-      
+      weekDays.push(moment(date).format('dddd').slice(0,3)); 
     }
     setDays(weekDays);
   }, []);
@@ -97,7 +91,6 @@ const Graph = ({ dataUser }: any) => {
       currency: el.currency,
     };
   });
-
 
   return (
     <div>

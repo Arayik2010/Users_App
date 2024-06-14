@@ -1,37 +1,19 @@
 "use client";
-
 import React, { useState } from "react";
 import styles from "@/styles/addUser.module.scss";
-import Box from "@/components/Molecules/Box";
 import UserModal from "../Modal/modal";
 import { useRouter } from 'next/navigation';
 import { useStore } from "@/Store/store";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { requestData } from "@/components/Utils/utils";
 import Button from "@/components/Molecules/Button";
 import UsersService from "@/srevice/users";
+import { updateUserSchema } from "@/components/Utils/schema";
 
-const schema = yup
-  .object()
-  .shape({
-    name: yup
-      .string()
-      .matches(/^([^0-9]*)$/, "First name should not container number")
-      .required("Name is empty"),
-    userCurrency: yup
-      .number()
-      .required("Currency is empty"),
-      subscribe: yup.string()
-  })
-  .required();
-
-const UpdateUserDataForm = ({responseItem,id}:any) => {
+const UpdateUserDataForm = ({ responseItem, id }: any) => {
   const [value, setValue] = useState(responseItem.name);
-  const [userCurrency, setUserCurrency] = useState(responseItem.currency);
   const [userUpdateModal, setUserUpdateModal] = useState(false);
-  const {userData, setUserData } = useStore();
+  const { userData, setUserData } = useStore();
   const [isChecked, setIsChecked] = useState<any>(responseItem.checked);
   const usersService = UsersService.getInstance();
 
@@ -41,28 +23,31 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: {name: responseItem.name, userCurrency: responseItem.currency, subscribe: responseItem.checked },
+    defaultValues:
+    {
+      name: responseItem.name,
+      userCurrency: responseItem.currency,
+      subscribe: responseItem.checked
+    },
     mode: "onBlur",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(updateUserSchema),
   });
 
   const handleChange = () => {
     setIsChecked(!isChecked);
   };
 
-  const onSubmit = async(data:any) =>{
+  const onSubmit = async (data: any) => {
     try {
       await usersService.update(id, {
-          id: id,
-          name:data.name,
-          currency:data.userCurrency,
-          createData: Date.now(),
-          checked: data.subscribe     
+        name: data.name,
+        currency: data.userCurrency,
+        createData: Date.now(),
+        checked: data.subscribe
       });
       const response = await usersService.listUsers()
       setUserData(response.data);
       setUserUpdateModal(true)
-      
     } catch (error) {
       console.log(error);
     }
@@ -70,16 +55,15 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
   const handleRequestCloseModal = async () => {
     setUserUpdateModal(false);
     router.push('/users')
-   
   };
 
-  const closeUpdateModal = () =>{
+  const closeUpdateModal = () => {
     setUserUpdateModal(false)
     router.push('/users')
   }
   return (
     <div className={styles.container_inputs}>
-      <form className="validation" onSubmit={handleSubmit(onSubmit)}>
+      <form className="validation w-[70%]" onSubmit={handleSubmit(onSubmit)}>
         <input
           className={styles.name_input}
           {...register("name")}
@@ -107,20 +91,18 @@ const UpdateUserDataForm = ({responseItem,id}:any) => {
             value={isChecked}
             type="checkbox"
             onChange={handleChange}
-
           />
           <p className="pl-4 text-sm">Add check</p>
-          </div>
-
+        </div>
         <Button classes={styles.add_button} onClick={handleSubmit(onSubmit)}>
           Update User
         </Button>
       </form>
       <UserModal
-       onlyConfirmButton={true}
-       handlerRequest={() => handleRequestCloseModal()}
+        onlyConfirmButton={true}
+        handlerRequest={() => handleRequestCloseModal()}
         modalIsOpen={userUpdateModal}
-        contentTitle={`User ${value} update your data`}
+        contentTitle={`User ${value} updated data`}
         closeModal={closeUpdateModal}
       />
     </div>

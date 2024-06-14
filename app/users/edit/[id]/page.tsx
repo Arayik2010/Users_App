@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 import styles from "@/styles/users.module.scss";
 import BackFileCollection from "@/components/Molecules/BackFileColection";
-import Box from "@/components/Molecules/Box";
 import UpdateUserDataForm from "@/components/Organism/UpdateUser/updateUserData";
 
 interface UserProps {
@@ -14,7 +13,6 @@ export default async function UpdateUser({ params: { id } }: UserProps) {
   });
   const responseItem = await requestItem.json();
  
-
   return (
     <div className={styles.container}>
       <BackFileCollection title="Custom User Data" href="/users" />
