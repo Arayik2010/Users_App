@@ -52,7 +52,7 @@ export default class UsersService {
     public async searchListItem(name: string) {
         try {
             const response = await axios.get(
-                process.env.NEXT_PUBLIC_BASE_URL + `/user?name=${name}`
+                process.env.NEXT_PUBLIC_BASE_URL + `/userName?name=${name}`
             );
             return response;
         } catch (e) {
