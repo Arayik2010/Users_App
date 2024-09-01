@@ -35,7 +35,6 @@ const UserTable = ({ resData }: any) => {
       i % pageSize ? acc : [...acc, data && data.slice(i, i + pageSize)],
     []
   );
-  console.log(deleteOpenModal,'kkk')
 
   useEffect(() => {
     setPageCount(Math.ceil(data.length / pageSize));
@@ -66,6 +65,7 @@ const UserTable = ({ resData }: any) => {
   async function searchDataUser(userName: string) {
     try {
       const resData = await usersService.searchListItem(userName);
+      console.log(resData.data,'data')
       setData(resData.data)
 
     } catch (e) {
