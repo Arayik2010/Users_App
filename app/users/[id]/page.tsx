@@ -1,3 +1,4 @@
+import React from "react";
 import ChackedIcon from "@/components/Icons/checkedIcon";
 import WarningIcon from "@/components/Icons/warningIcon";
 import BackFileCollection from "@/components/Molecules/BackFileColection";
@@ -5,16 +6,19 @@ import Box from "@/components/Molecules/Box";
 import { diffDays, updateDataFormat } from "@/components/Utils/utils";
 import UsersService from "@/srevice/users";
 import styles from "@/styles/users.module.scss";
-import { type } from "os";
-import React from "react";
-
 
 interface UserProps {
-  params: any;
+  params: {
+    id: string;
+  };
 }
 const usersService = UsersService.getInstance();
-export async function UserItem({ params: { id } }: UserProps) {
-  const responseItem: any = await usersService.listUsers(id, { cache: "no-store", })
+export async function UserItem({
+  params: { id },
+}: UserProps): Promise<JSX.Element> {
+  const responseItem: any = await usersService.listUsers(id, {
+    cache: "no-store",
+  });
 
   return (
     <div>
@@ -45,16 +49,16 @@ export async function UserItem({ params: { id } }: UserProps) {
                 {updateDataFormat(responseItem.data.createData)}
               </td>
               <td className={styles.td}>
-              <div className="flex justify-center items-center">
-                {diffDays(responseItem.data.createData) ? (
-                  <div>
-                    <WarningIcon />
-                  </div>
-                ) : (
-                  <div>
-                    <ChackedIcon />
-                  </div>
-                )}
+                <div className="flex justify-center items-center">
+                  {diffDays(responseItem.data.createData) ? (
+                    <div>
+                      <WarningIcon />
+                    </div>
+                  ) : (
+                    <div>
+                      <ChackedIcon />
+                    </div>
+                  )}
                 </div>
               </td>
             </tr>
