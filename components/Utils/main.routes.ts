@@ -11,8 +11,4 @@ export const MainRoutes = [
     path: "/",
     name: "Login",
   },
-  {
-    path: "/register",
-    name: "Register",
-  },
 ];
