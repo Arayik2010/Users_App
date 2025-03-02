@@ -32,19 +32,22 @@ const Login = () => {
   });
 
   const onSubmit = async (data: any, event: any) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     const requestData = {
       email: data.email,
       password: data.password,
     };
 
     try {
-      const response = await fetch("http://localhost:3001/login", {
-        method: "POST",
-        credentials: "include", // Important: Allows cookies to be saved
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestData),
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_BASE_URL + "/login",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(requestData),
+        }
+      );
 
       const data = await response.json();
 

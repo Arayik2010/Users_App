@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styles from "@/styles/addUser.module.scss";
 import UserModal from "../Modal/modal";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useStore } from "@/Store/store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -13,21 +13,20 @@ import { updateUserSchema } from "@/components/Utils/schema";
 const UpdateUserDataForm = ({ responseItem, id }: any) => {
   const [value, setValue] = useState(responseItem.name);
   const [userUpdateModal, setUserUpdateModal] = useState(false);
-  const { userData, setUserData } = useStore();
+  const { setUserData } = useStore();
   const [isChecked, setIsChecked] = useState<any>(responseItem.checked);
   const usersService = UsersService.getInstance();
 
-  const router = useRouter()
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues:
-    {
+    defaultValues: {
       name: responseItem.name,
       userCurrency: responseItem.currency,
-      subscribe: responseItem.checked
+      subscribe: responseItem.checked,
     },
     mode: "onBlur",
     resolver: yupResolver(updateUserSchema),
@@ -43,24 +42,24 @@ const UpdateUserDataForm = ({ responseItem, id }: any) => {
         name: data.name,
         currency: data.userCurrency,
         createData: Date.now(),
-        checked: data.subscribe
+        checked: data.subscribe,
       });
-      const response = await usersService.listUsers()
-      setUserData(response.data);
-      setUserUpdateModal(true)
+      const response = await usersService.listUsers();
+      setUserData(response?.data);
+      setUserUpdateModal(true);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   const handleRequestCloseModal = async () => {
     setUserUpdateModal(false);
-    router.push('/users')
+    router.push("/users");
   };
 
   const closeUpdateModal = () => {
-    setUserUpdateModal(false)
-    router.push('/users')
-  }
+    setUserUpdateModal(false);
+    router.push("/users");
+  };
   return (
     <div className={styles.container_inputs}>
       <form className="validation w-[70%]" onSubmit={handleSubmit(onSubmit)}>
@@ -72,7 +71,9 @@ const UpdateUserDataForm = ({ responseItem, id }: any) => {
           placeholder="Name"
           name="name"
         />
-        <p className={styles.error_text}>{responseItem.name && errors?.name?.message}</p>
+        <p className={styles.error_text}>
+          {responseItem.name && errors?.name?.message}
+        </p>
         <input
           className={styles.age_input}
           {...register("userCurrency")}
@@ -81,10 +82,12 @@ const UpdateUserDataForm = ({ responseItem, id }: any) => {
           placeholder="Currency"
           name="userCurrency"
         />
-        <p className={styles.error_text}>{responseItem.currency && errors?.userCurrency?.message}</p>
+        <p className={styles.error_text}>
+          {responseItem.currency && errors?.userCurrency?.message}
+        </p>
         <div className="mt-5  flex item-center pl-4 ">
           <input
-            {...register('subscribe')}
+            {...register("subscribe")}
             name="subscribe"
             className="w-5 h-5 "
             id="subscribe"

@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import styles from "@/styles/addUser.module.scss";
 import { useForm } from "react-hook-form";
-import { requestData } from "@/components/Utils/utils";
 import { useStore } from "@/Store/store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import UserModal from "@/components/Organism/Modal/modal";
@@ -16,7 +15,6 @@ const AddUser = () => {
   const [value, setValue] = useState("");
   const [userCurrency, setUserCurrency] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState();
   const router = useRouter();
   const [isChecked, setIsChecked] = useState<any>(false);
   const { userData, setUserData } = useStore();
@@ -41,22 +39,21 @@ const AddUser = () => {
         name: data.name,
         currency: data.userCurrency,
         createData: new Date(),
-        checked: data.subscribe
+        checked: data.subscribe,
       });
       setIsOpen(true);
       setValue(data.name);
-      const response = await usersService.listUsers()
+      const response = await usersService.listUsers();
       setUserData(response.data);
       setUserCurrency("");
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const handleRequestCloseModal = async () => {
     setIsOpen(false);
     router.push("/users");
-    setData(await requestData());
   };
 
   const handleChange = () => {
@@ -88,7 +85,7 @@ const AddUser = () => {
           <p className={styles.error_text}>{errors?.userCurrency?.message}</p>
           <div className="mt-5  flex item-center pl-4 ">
             <input
-              {...register('subscribe')}
+              {...register("subscribe")}
               name="subscribe"
               className="w-5 h-5 "
               id="subscribe"
