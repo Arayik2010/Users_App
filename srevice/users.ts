@@ -39,10 +39,18 @@ export default class UsersService {
   }
 
   public async listUsers(id?: any, cache?: any) {
+    const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
         process.env.NEXT_PUBLIC_BASE_URL + `/user/${id ? id : ""}`,
-        cache
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            cache: cache,
+          },
+        }
       );
       return response;
     } catch (e) {
@@ -52,14 +60,14 @@ export default class UsersService {
 
   public async searchListItem(name: string) {
     try {
-      const response = await axios.get(
-        process.env.NEXT_PUBLIC_BASE_URL + `/userName?name=${name}`
-      );
-      return response;
+        const response = await axios.get(
+            process.env.NEXT_PUBLIC_BASE_URL + `/userName?name=${name}`
+        );
+        return response;
     } catch (e) {
-      throw e;
+        throw e
     }
-  }
+}
 
   public async itemDelete(id: any) {
     try {
