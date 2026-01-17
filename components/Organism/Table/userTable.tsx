@@ -33,6 +33,7 @@ const UserTable = ({ resData }: any) => {
       i % pageSize ? acc : [...acc, data && data.slice(i, i + pageSize)],
     []
   );
+  console.log(chunk, 'chunk')
 
   useEffect(() => {
     setPageCount(Math.ceil(data.length / pageSize));
